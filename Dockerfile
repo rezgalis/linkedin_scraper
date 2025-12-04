@@ -2,7 +2,7 @@ FROM python:3.10-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install Chromium + dependencies
+# Install Chromium + dependencies for headless mode
 RUN apt-get update && apt-get install -y \
     wget \
     unzip \
@@ -20,6 +20,8 @@ RUN apt-get update && apt-get install -y \
     libxdamage1 \
     libxfixes3 \
     libgbm1 \
+    libxrender1 \
+    libfontconfig1 \
     fonts-liberation \
     libappindicator3-1 \
     xdg-utils \
@@ -38,5 +40,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install fastapi uvicorn
 
 EXPOSE 3008
-
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "3008"]
